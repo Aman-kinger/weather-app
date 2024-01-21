@@ -7,11 +7,18 @@ const locationForm = document.getElementById('locationForm')
 
 async function getWeather(location){
     try{
-        const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}`, {mode: 'cors'})
+        const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=1&aqi=yes&alerts=nos`, {mode: 'cors'})
         const weatherData = await response.json()
-        console.log(weatherData.current.condition.text)
-        console.log(weatherData.current.temp_c)
-        console.log(weatherData.current.feelslike_c)
+        const weather = {
+            location: weatherData.location.name,
+            condition: weatherData.current.condition.text,
+            icon: weatherData.current.condition.icon,
+            temp: weatherData.current.temp_c,
+            feelsLike: weatherData.current.feelslike_c,
+            high: weatherData.forecast.forecastday[0].day.maxtemp_c,
+            low: weatherData.forecast.forecastday[0].day.mintemp_c,
+        }
+        return weather
     } catch(error){
         console.log(error)
     }
@@ -20,7 +27,16 @@ async function getWeather(location){
 const displayWeather = (e) => {
     e.preventDefault()
     let location = getCity.value
-    getWeather(location)
+    weather = getWeather(location)
+    weather.then(weather => {
+        document.getElementById('location').innerHTML = weather.location
+        document.getElementById('condition').innerHTML = weather.condition
+        document.getElementById('temp').innerHTML = weather.temp + '°'
+        document.getElementById('max').innerHTML = 'High: ' + weather.high + '°'
+        document.getElementById('min').innerHTML = 'Min: ' + weather.low + '°'
+        document.getElementById('weatherIcon').src = weather.icon
+    })
 }
 
 locationForm.onsubmit = displayWeather
+

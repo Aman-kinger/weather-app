@@ -47,3 +47,40 @@ h1{
     font-weight: 500;
     cursor: pointer;
 }
+
+/*styling for the weather card*/
+.weather-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: #343A40;
+    color: #fff;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.weeather-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.weather-card h1{
+    font-size: 2em;
+    font-weight: 500;
+}
+
+.weather-card h2{
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+.weather-card h3{
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+
